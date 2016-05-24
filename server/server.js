@@ -20,7 +20,7 @@ app.get('/scrape', function(req, res){
    
    // test URL for now that retrieves Lakers shot chart info
    // for 2010->2011 season
-   url = "http://nbasavant.com/ajax/getShotsCompare.php?ids=1610612747%7C&st=&q1=&q2=&sza=&szb=&sd1=&ed1=&sd2=&ed2=&szr=&y1=2010&y2=2014&dgt=&dlt=&defdistgt1=&defdistlt1=&defdistgt2=&defdistlt2=&team=&min_gt=&min_lt=&sec_gt=&sec_lt=&shot_made=&shot_made_p2=&sp=false&gb1=player&gb2=player&_=1463886691041"
+   url = "http://nbasavant.com/ajax/getShotsCompare.php?ids=1610612741%7C&st=&q1=&q2=&sza=&szb=&sd1=&ed1=&sd2=&ed2=&szr=&y1=2014&y2=2014&dgt=&dlt=&defdistgt1=&defdistlt1=&defdistgt2=&defdistlt2=&team=&min_gt=&min_lt=&sec_gt=&sec_lt=&shot_made=&shot_made_p2=&sp=false&gb1=player&gb2=player&_=1464070777032"
  
    // perform the request.
    request(url, function(error, response, html){
@@ -38,6 +38,43 @@ app.get('/scrape', function(req, res){
         // <script> </script>).
         // so $ contains the entirety of the HTML reponse.
         var $ = cheerio.load(html);
+                     
+        $('script').filter(function(){
+           
+           var data = $(this);
+           console.log("type of data is: " +typeof(data));
+           
+           // take object response and convert to string
+           var dataString = " " + data;
+           
+           
+           // position n is the position of the closing
+           // bracket for the JSON data.
+           var n = dataString.indexOf("]");
+           //console.log("n is: " + n);
+           
+           //console.log("beginning: " + dataString.substring(25, 30));
+           
+           //console.log("substring: " + dataString.substring(25, n-1));
+           
+           // position 25 is where the actual JSON data starts,
+           // so we take the substring from 25 up to position n,
+           // where position n is the indexOf("]"), the closing
+           // brackets for the JSON data.
+           
+           var jsonStats = dataString.substring(25, n-1);
+           
+           // append closing bracket for the JSON data.
+           jsonStats = jsonStats + "]";
+           
+           console.log(jsonStats);
+           console.log(jsonStats.substring(0, 15));
+           
+           //console.log("jsonStats: " + jsonStats);
+        });
+        
+        
+        
         
      }else{
         // unsuccessful request
