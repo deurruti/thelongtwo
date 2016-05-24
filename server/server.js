@@ -59,6 +59,12 @@ app.get('/scrape', function(req, res){
 
 // we want to synchronize the URL calls so that we can
 // keep track of proper files to save data to.
+// this is a recursive function that takes a list of URLs.
+// As long as a URL is available to pop from urls array,
+// we recurse on syncCalls. Once we are out of URLs from
+// urls array, we can exit. Recursion is necessary
+// in order to synchronize otherwise asynchronous URL calls
+// for the purposes of writing to the correct year file.
 function syncCalls(urls){
    url = urls.pop();
    // perform the request.
