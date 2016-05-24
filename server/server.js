@@ -67,8 +67,8 @@ app.get('/scrape', function(req, res){
            // append closing bracket for the JSON data.
            jsonStats = jsonStats + "]";
            
-           console.log(jsonStats);
-           console.log(jsonStats.substring(0, 15));
+           //console.log(jsonStats);
+           //console.log(jsonStats.substring(0, 15));
            
            //console.log("jsonStats: " + jsonStats);
         });
