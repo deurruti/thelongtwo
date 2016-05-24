@@ -65,6 +65,9 @@ app.get('/scrape', function(req, res){
 // urls array, we can exit. Recursion is necessary
 // in order to synchronize otherwise asynchronous URL calls
 // for the purposes of writing to the correct year file.
+//
+// this synchronization method is modeled after
+// http://mikelam.azurewebsites.net/how-to-make-synchronous-http-requests-in-node-js/
 function syncCalls(urls){
    url = urls.pop();
    // perform the request.
