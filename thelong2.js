@@ -8,26 +8,28 @@ var dataset = [
                 [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
                 [410, 12], [475, 44], [25, 67], [85, 21], [220, 88], [-9.6,6.1], [200, 260], [213, 160], [200, 400]
               ];
-
-
-
-/*d3.json("2010.json", function(data) {
-    data.forEach(function(d) {
+//d3.xhr("team_data/76ers/2010", function(data) {
+//    console.log(data);
+//        var dataset = data.response;
+    warriors_2010_data.forEach(function(d) {
         d.player_name = d.player_name;
         d.x = +d.x;
         d.y = +d.y;
-        // if 0, then made shot
+        // if 1, then made shot
         d.made = +d.made;
         d.opponent = d.opponent;
         d.game_date = d.game_date;
-    });*/
+    });
+
+//    console.log(dataset);
+//    console.log(dataset[0]);
 
     var xScale = d3.scale.linear()
-        .domain([-400, d3.max(dataset, function(d) { return d[0]; })])
-        .range([10, w/2 + 10]);
+        .domain([-395, 395])
+        .range([0, w/2]);
 
     var yScale = d3.scale.linear()
-        .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+        .domain([0, 500])
         .range([h/2 - padding, 0 - padding]);
 
     var xAxis = d3.svg.axis()
@@ -52,36 +54,36 @@ var dataset = [
         .attr("height", h/2);
 
     svg.selectAll("circle")
-        .data(dataset)
+        .data(warriors_2010_data)
         .enter()
         .append("circle")
         .attr("cx", function(d) {
-                return xScale(d[0]);
+                return xScale(d.x);
         })
         .attr("cy", function(d) {
-                return yScale(d[1]);
+                return yScale(d.y);
         })
         .attr("r", function(d) {
                 //return Math.sqrt(h - d[1]);
                 return 2;
         });
 
-    svg.selectAll("text")
-        .data(dataset)
-        .enter()
-        .append("text")
-        .text(function(d) {
-                return d[0] + "," + d[1];
-        })
-        .attr("x", function(d) {
-                return xScale(d[0]);
-        })
-        .attr("y", function(d) {
-                return yScale(d[1]);
-        })
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "11px")
-        .attr("fill", "red");
+//    svg.selectAll("text")
+//        .data(warriors_2010_data)
+//        .enter()
+//        .append("text")
+//        .text(function(d) {
+//                return d.x + "," + d.y;
+//        })
+//        .attr("x", function(d) {
+//                return xScale(d.x);
+//        })
+//        .attr("y", function(d) {
+//                return yScale(d.y);
+//        })
+//        .attr("font-family", "sans-serif")
+//        .attr("font-size", "11px")
+//        .attr("fill", "red");
 
      svg.append("g")
         .attr("class", "axis")
