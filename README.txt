@@ -1,6 +1,7 @@
 Members : 
 
-Daniel Urrutia (deurruti@ucsc.edu)
+##Daniel Urrutia (deurruti@ucsc.edu). 
+
 
 Web/data scraping is done using JavaScript via NodeJS & ExpressJS
 	
