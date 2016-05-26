@@ -1,3 +1,7 @@
+Members : 
+
+Daniel Urrutia (deurruti@ucsc.edu)
+
 Web/data scraping is done using JavaScript via NodeJS & ExpressJS
 	
 ExpressJS is the web framework that sits on top of the NodeJS backend
