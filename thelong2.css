@@ -3,3 +3,12 @@
     /*stroke: #000;*/
     /*stroke-width: 1px black;*/
 }
+
+#radios{
+	display: flex;
+	padding: 5px;
+}
+
+.year{
+	margin-left: 10px;
+}
