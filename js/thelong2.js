@@ -1,3 +1,28 @@
+//global variable for year
+var yearSelected ; 
+
+//Code for Jquery things 
+$(document).ready(function(){
+
+var years = $(".year"); 
+console.log(years);
+
+//return the year selected 
+years.click(function(){
+
+for(var i = 0; i < years.length; i++){
+   console.log(years[i].checked);
+
+   if(years[i].checked === true){
+      yearSelected = years[i].value;
+      console.log(yearSelected);
+   }
+}
+});
+
+});
+
+//Code for D3 starts here
 //Width and height
 var w = 1000;
 var h = 1000;
