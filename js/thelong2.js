@@ -4,14 +4,10 @@ var h = 1000;
 
 var padding = 50;
 
-var dataset = [
-                [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
-                [410, 12], [475, 44], [25, 67], [85, 21], [220, 88], [-9.6,6.1], [200, 260], [213, 160], [200, 400]
-              ];
-//d3.xhr("team_data/76ers/2010", function(data) {
-//    console.log(data);
-//        var dataset = data.response;
-    warriors_2010_data.forEach(function(d) {
+d3.xhr("../team_data/Warriors/2010", function(data) {
+   	console.log(data);
+   	var dataset = eval(data.response);
+	dataset.forEach(function(d) {
         d.player_name = d.player_name;
         d.x = +d.x;
         d.y = +d.y;
@@ -21,8 +17,8 @@ var dataset = [
         d.game_date = d.game_date;
     });
 
-//    console.log(dataset);
-//    console.log(dataset[0]);
+   console.log(dataset);
+   console.log(dataset[0]);
 
     var xScale = d3.scale.linear()
         .domain([-395, 395])
@@ -43,18 +39,18 @@ var dataset = [
         //.ticks(5);
 
     //Create SVG element
-    var svg = d3.select("body")
+    var svg = d3.select("#shot_chart")
         .append("svg")
         .attr("width", w/2 + padding)
         .attr("height", h/2 + padding);
 
     svg.append("image")
-        .attr("xlink:href", "court4.png")
+        .attr("xlink:href", "../images/court4.png")
         .attr("width", w/2)
         .attr("height", h/2);
 
     svg.selectAll("circle")
-        .data(warriors_2010_data)
+        .data(dataset)
         .enter()
         .append("circle")
         .attr("cx", function(d) {
@@ -95,4 +91,4 @@ var dataset = [
         .attr("transform", "translate(0," + w/2 + ")")
         .call(xAxis);
 
-//});
+});
