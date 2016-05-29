@@ -64,10 +64,16 @@ d3.xhr("../team_data/Warriors/2010", function(data) {
         //.ticks(5);
 
     //Create SVG element
+     var svg_season = d3.select("#season_rank")
+        .append("svg")
+        .attr("width", w/2 + padding)
+        .attr("height", h/2 + padding); 
+
     var svg = d3.select("#shot_chart")
         .append("svg")
         .attr("width", w/2 + padding)
         .attr("height", h/2 + padding);
+
 
     svg.append("image")
         .attr("xlink:href", "../images/court4.png")
