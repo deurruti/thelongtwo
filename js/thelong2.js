@@ -1,6 +1,6 @@
 //global variable for year
 var yearSelected = 2010; 
-
+var teamSelected = "Warriors";
 //Code for Jquery things 
 $(document).ready(function(){
 
@@ -49,7 +49,7 @@ var yAxis = d3.svg.axis()
     .scale(yScale)
     .orient("left");
 
-d3.xhr("../team_data/Warriors/" + yearSelected, function(data) {
+d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
    	var dataset = eval(data.response);
 	dataset.forEach(function(d) {
         d.player_name = d.player_name;
@@ -65,19 +65,14 @@ d3.xhr("../team_data/Warriors/" + yearSelected, function(data) {
    console.log(dataset[0]);
 
     //Create SVG element
-
-     var svg_season = d3.select("#season_rank")
+        /*
+     var season_rank = d3.select("#season_rank")
         .append("svg")
         .attr("width", w/2 + padding)
         .attr("height", h/2 + padding); 
 
-    var svg = d3.select("#shot_chart")
-        .append("svg")
-        .attr("width", w/2 + padding)
-        .attr("height", h/2 + padding);
-
-
-    svg.append("image")
+   */
+    //season_rank.append("image")
 
     var shot_chart = d3.select("#shot_chart")
     .append("svg")
@@ -105,10 +100,66 @@ d3.xhr("../team_data/Warriors/" + yearSelected, function(data) {
         });
 });
 
+
+
+d3.csv("../outcomes/2010_outcome.csv", function(data){
+    console.log("data is: ", data);
+
+    var data_copy = data;
+
+    var index = d3.range(30),
+    data_one = index.map(d3.random.normal(100, 0));
+
+    var x = d3.scale.linear()
+        .domain([0, 100])
+        .range([0, w/4]);
+
+    var y = d3.scale.ordinal()
+        .domain(index)
+        .rangeRoundBands([0, h/2], .1);
+
+    var season_rank = d3.select("#season_rank")
+                        .append("svg")
+                        .attr("width",w/4 + padding)
+                        .attr("height",h/2 + padding)
+                        .append("g")
+                        
+
+        var bar = season_rank.selectAll(".bar")
+            .data(data_one)
+            .enter().append("g")
+            .attr("class", "bar")
+            .attr("transform", function(d, i) { return "translate(0," + y(i) + ")"; });
+
+    bar.append("rect")
+        .attr("height", y.rangeBand())
+        .attr("width", x)
+        .on("mouseover", function(){
+            console.log("here");
+            d3.select(this).style("fill","red");
+        })
+        .on("mouseout", function(){
+            console.log("here");
+            d3.select(this).style("fill","steelblue");
+        })
+        .on("click", function(d, i) { teamSelected = data_copy[i].Team; console.log(data_copy[i].Team); updateData(); });
+
+
+    bar.append("text")
+        .attr("text-anchor", "start")
+        .attr("x", 40)
+        .attr("y", y.rangeBand() / 2)
+        .attr("dy", ".35em")
+        .text(function(d, i) { console.log(data_copy[i].Team); return data_copy[i].Team; });
+
+    
+
+});
+
 function updateData() {
     console.log("updating data" + yearSelected);
     // Get the data again
-    d3.xhr("../team_data/Warriors/" + yearSelected, function(data) {
+    d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
         var dataset = eval(data.response);
         dataset.forEach(function(d) {
             d.player_name = d.player_name;
@@ -125,7 +176,8 @@ function updateData() {
             .selectAll(".shot")
             .data(dataset)
             .transition()
-            .duration(3000)
+            .duration(2000)
+            
             .attr("cx", function(d) {
                 return xScale(d.x);
             })
