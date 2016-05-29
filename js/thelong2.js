@@ -1,6 +1,6 @@
 //global variable for year
 var yearSelected = 2010; 
-var teamSelected = "Warriors";
+var teamSelected = "warriors";
 //Code for Jquery things 
 $(document).ready(function(){
 
@@ -80,7 +80,7 @@ d3.xhr("team_data/" + teamSelected + "/" + yearSelected, function(data) {
         .attr("height", h/2 + padding);
 
     shot_chart.append("image")
-        .attr("xlink:href", "../images/court4.png")
+        .attr("xlink:href", "images/court4.png")
         .attr("width", w/2)
         .attr("height", h/2);
 
