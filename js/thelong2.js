@@ -1,33 +1,10 @@
 //global variable for year
 var yearSelected = 2010; 
 
-//Code for Jquery things 
-$(document).ready(function(){
-
-    var years = $(".year"); 
-    console.log(years);
-
-    //return the year selected 
-    years.click(function(){
-
-        for(var i = 0; i < years.length; i++){
-           console.log(years[i].checked);
-
-           if(years[i].checked === true){
-              yearSelected = years[i].value;
-              console.log(yearSelected);
-           }
-        }
-
-        updateData();
-    });
-
-});
-
 //Code for D3 starts here
 //Width and height
-var w = 1000;
-var h = 1000;
+var w = 1200;
+var h = 1200;
 
 var padding = 50;
 
@@ -55,8 +32,13 @@ d3.xhr("../team_data/Warriors/" + yearSelected, function(data) {
         d.player_name = d.player_name;
         d.x = +d.x;
         d.y = +d.y;
+        d.distance = +d.distance;
         // if 1, then made shot
-        d.made = +d.made;
+        if (d.made == 1) {
+            d.made = true;
+        } else {
+            d.made = false;
+        }
         d.opponent = d.opponent;
         d.game_date = d.game_date;
     });
@@ -87,11 +69,30 @@ d3.xhr("../team_data/Warriors/" + yearSelected, function(data) {
                 return yScale(d.y);
         })
         .attr("r", function(d) {
+            if (longtworange(d)) {
+                return 4;
+            } else {
                 return 2;
+            }
+        })
+        .style("stroke", function(d){
+            return "black";
+        })
+        .style("fill", function(d){
+            if (longtworange(d)) {
+                if (d.made){
+                    return "green";
+                } else {
+                    return "red";
+                }
+            } else {
+                return "gray";
+            }
         });
 });
 
-function updateData() {
+function updateYear(year) {
+    yearSelected = year;
     console.log("updating data" + yearSelected);
     // Get the data again
     d3.xhr("../team_data/Warriors/" + yearSelected, function(data) {
@@ -100,8 +101,13 @@ function updateData() {
             d.player_name = d.player_name;
             d.x = +d.x;
             d.y = +d.y;
+            d.distance = +d.distance;
             // if 1, then made shot
-            d.made = +d.made;
+            if (d.made == 1) {
+                d.made = true;
+            } else {
+                d.made = false;
+            }
             d.opponent = d.opponent;
             d.game_date = d.game_date;
         });
@@ -119,8 +125,34 @@ function updateData() {
                     return yScale(d.y);
             })
             .attr("r", function(d) {
+                if (longtworange(d)) {
+                    return 4;
+                } else {
                     return 2;
+                }
+            })
+            .style("stroke", function(d){
+                return "black";
+            })
+            .style("fill", function(d){
+                if (longtworange(d)) {
+                    if (d.made){
+                        return "green";
+                    } else {
+                        return "red";
+                    }
+                } else {
+                    return "gray";
+                }
             });
 
     });
+}
+
+function longtworange(d) {
+    if (d.distance <= 22 && d.distance >= 19) {
+        return true;
+    } else {
+        return false;
+    }
 }
