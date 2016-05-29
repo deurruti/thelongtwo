@@ -142,7 +142,7 @@ d3.csv("outcomes/2010_outcome.csv", function(data){
             console.log("here");
             d3.select(this).style("fill","steelblue");
         })
-        .on("click", function(d, i) { teamSelected = data_copy[i].Team; console.log(data_copy[i].Team); updateData(); });
+        .on("click", function(d, i) { teamSelected = data_copy[i].Team.toLowerCase(); console.log(data_copy[i].Team); updateData(); });
 
 
     bar.append("text")
