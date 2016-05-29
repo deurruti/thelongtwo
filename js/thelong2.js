@@ -49,7 +49,7 @@ var yAxis = d3.svg.axis()
     .scale(yScale)
     .orient("left");
 
-d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
+d3.xhr("/team_data/" + teamSelected + "/" + yearSelected, function(data) {
    	var dataset = eval(data.response);
 	dataset.forEach(function(d) {
         d.player_name = d.player_name;
@@ -102,7 +102,7 @@ d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
 
 
 
-d3.csv("../outcomes/2010_outcome.csv", function(data){
+d3.csv("/outcomes/2010_outcome.csv", function(data){
     console.log("data is: ", data);
 
     var data_copy = data;
@@ -159,7 +159,7 @@ d3.csv("../outcomes/2010_outcome.csv", function(data){
 function updateData() {
     console.log("updating data" + yearSelected);
     // Get the data again
-    d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
+    d3.xhr("/team_data/" + teamSelected + "/" + yearSelected, function(data) {
         var dataset = eval(data.response);
         dataset.forEach(function(d) {
             d.player_name = d.player_name;
