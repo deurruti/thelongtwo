@@ -1,0 +1,25 @@
+.axis line, .axis text, .axis path{
+    /*display: none;*/
+    /*stroke: #000;*/
+    /*stroke-width: 1px black;*/
+}
+
+#radios{
+	padding: 5px;
+}
+
+.year{
+	margin-left: 10px;
+}
+
+.container{
+	width: 98% !important;
+}
+
+.bar rect {
+  fill: steelblue;
+}
+
+.bar text {
+  fill: white;
+}
