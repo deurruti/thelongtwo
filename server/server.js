@@ -72,6 +72,7 @@ function syncCalls(urls){
    url = urls.pop();
    // perform the request.
    request(url, function(error, response, html){
+      
      if(!error){
         // successful request.
         
@@ -136,12 +137,7 @@ function syncCalls(urls){
                   server.close();  
               }
            });
-           
-           //console.log("jsonStats: " + jsonStats);
         });
-        
-        
-        
         
      }else{
         // unsuccessful request
