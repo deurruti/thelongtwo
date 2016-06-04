@@ -32,7 +32,7 @@ var y = d3.scale.ordinal()
 
 
 // Build shot chart
-d3.xhr("/team_data/" + teamSelected + "/" + yearSelected, function(data) {
+d3.xhr("team_data/" + teamSelected + "/" + yearSelected, function(data) {
     var dataset = eval(data.response);
     dataset.forEach(function(d) {
         d.player_name = d.player_name;
