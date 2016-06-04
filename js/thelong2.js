@@ -32,7 +32,7 @@ var y = d3.scale.ordinal()
 
 
 // Build shot chart
-d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
+d3.xhr("/team_data/" + teamSelected + "/" + yearSelected, function(data) {
     var dataset = eval(data.response);
     dataset.forEach(function(d) {
         d.player_name = d.player_name;
@@ -57,7 +57,7 @@ d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
         .attr("height", h/2 + padding);
 
     shot_chart.append("image")
-        .attr("xlink:href", "../images/court4.png")
+        .attr("xlink:href", "/images/court4.png")
         .attr("width", w/2)
         .attr("height", h/2);
 
@@ -96,7 +96,7 @@ d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
 });
 
 //Build season rank list
-d3.csv("../outcomes/" + yearSelected + "_outcome.csv", function(data){
+d3.csv("/outcomes/" + yearSelected + "_outcome.csv", function(data){
 
     console.log(data);
 
@@ -164,7 +164,7 @@ function updateShotChart(){
     console.log("Team: " + teamSelected + "\n");
     console.log("Year: " + yearSelected + "\n");
     // Get the data again
-    d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
+    d3.xhr("/team_data/" + teamSelected + "/" + yearSelected, function(data) {
         var dataset = eval(data.response);
         dataset.forEach(function(d) {
             d.player_name = d.player_name;
@@ -257,7 +257,7 @@ function updateShotChart(){
 function updateSeasonRank(){
     console.log("updating season rank");
     console.log("season" + yearSelected);
-    d3.csv("../outcomes/" + yearSelected + "_outcome.csv", function(data){
+    d3.csv("/outcomes/" + yearSelected + "_outcome.csv", function(data){
         console.log(data);
 
         var transition = d3.select("#season_rank")
