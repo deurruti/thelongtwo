@@ -35,10 +35,12 @@ var y = d3.scale.ordinal()
 d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
     var dataset = eval(data.response);
     dataset.forEach(function(d) {
+        longTwoObject.total_attempted++;
         d.player_name = d.player_name;
         d.x = +d.x;
         d.y = +d.y;
         d.distance = +d.distance;
+        
         // if 1, then made shot
         if (d.made == 1) {
             d.made = true;
@@ -48,6 +50,12 @@ d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
         d.opponent = d.opponent;
         d.game_date = d.game_date;
     });
+    // calculate the long two percentage
+    longTwoObject.long_two_percent = (longTwoObject.long_two_attempted) / 
+                                        (longTwoObject.total_attempted);
+    console.log("longTwoObject: ", longTwoObject);
+    
+    teamLongTwo.push(longTwoObject);
 
     console.log(dataset[0]);
 

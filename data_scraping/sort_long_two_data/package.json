@@ -1,0 +1,16 @@
+{
+  "name": "grab_long_two_data",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "request": "latest",
+    "cheerio": "latest"
+  },     
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
