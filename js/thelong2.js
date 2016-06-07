@@ -111,7 +111,9 @@ d3.csv("../outcomes/" + yearSelected + "_outcome.csv", function(data){
         .enter()
         .append("g")
         .attr("class", "bar")
-        .attr("transform", function(d, i) { 
+        .attr("transform", function(d, i) {
+            console.log(i); 
+            //if (d.Team !== "Bobcats") 
             return "translate(0," + y(i) + ")";
         });
 
@@ -137,6 +139,7 @@ d3.csv("../outcomes/" + yearSelected + "_outcome.csv", function(data){
         .attr("dy", ".35em")
         .text(function(d) { 
             console.log(d.Team);
+            //if (d.Team !== "Bobcats") 
             return d.Team;
         });
 
@@ -199,9 +202,12 @@ function updateYear(year) {
 // Updates global team variable
 // Calls function to update shot chart
 function updateTeam(team) {
+    console.log("update team: ", team);
     teamSelected = team.toLowerCase();
     updateShotChart();
 }
+
+
 
 // Transitions Shot Chart
 function updateShotChart(){
@@ -322,6 +328,7 @@ function updateSeasonRank(){
         .select(".teamname")
         .text(function(d) { 
             console.log(d.Team);
+            //if (d.Team !== "Bobcats") 
             return d.Team;
         });
 
