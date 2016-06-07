@@ -143,6 +143,50 @@ d3.csv("../outcomes/" + yearSelected + "_outcome.csv", function(data){
     
 });
 
+d3.csv("../long_two_data/csv_sorted/" + yearSelected + ".csv", function(data){
+
+    var longtwo_rank = d3.select("#longtwo_rank")
+        .append("svg")
+        .attr("width", w/4 + padding)
+        .attr("height", h/2 + padding)
+        .append("g");
+
+    var bar = longtwo_rank.selectAll(".bar")
+        .data(data)
+        .enter()
+        .append("g")
+        .attr("class", "bar")
+        .attr("transform", function(d, i) { 
+            return "translate(0," + y(i) + ")";
+        });
+
+    bar.append("rect")
+        .attr("class", "team")
+        .attr("height", y.rangeBand())
+        .attr("width", w/6)
+        .on("mouseover", function(){
+            d3.select(this).style("fill","red");
+        })
+        .on("mouseout", function(){
+            d3.select(this).style("fill","steelblue");
+        })
+        .on("click", function(d, i) {
+            updateTeam(d.team);
+        });
+
+    bar.append("text")
+        .attr("class", "teamname")
+        .attr("text-anchor", "start")
+        .attr("x", 40)
+        .attr("y", y.rangeBand() / 2)
+        .attr("dy", ".35em")
+        .text(function(d) { 
+            console.log(d.team);
+            return d.team;
+        });
+});
+
+
 // Updates global year varibale
 // Calls functions to update shot chart
 // and season rank list
