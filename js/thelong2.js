@@ -326,6 +326,32 @@ function updateSeasonRank(){
         });
 
     });
+    // Transitions Long Two Rank List
+    d3.csv("../long_two_data/csv_sorted/" + yearSelected + ".csv", function(data){
+
+        var transition = d3.select("#longtwo_rank")
+        .selectAll(".bar")
+        .data(data)
+        .transition()
+        .duration(2000)
+        .delay(function(d, i) {
+            return i * 50;
+        });
+
+        transition
+        .attr("transform", function(d, i) { 
+            return "translate(0," + y(i) + ")";
+        });
+
+        transition
+        .select(".teamname")
+        .text(function(d) { 
+            console.log(d.team);
+            return d.team;
+        });
+
+    });
+
 }
 
 // Returns true if shot is in long two range
