@@ -350,7 +350,7 @@ function updateShotChart(){
     console.log("teamSelected in updateShotChart: ", teamSelected);
     //elementSelected.style("fill", "#7eaacd");
     // Get the data again
-    d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
+    d3.xhr("team_data/" + teamSelected + "/" + yearSelected, function(data) {
         elementSelected.style("fill", "#ff7f00");
         var dataset = eval(data.response);
 
