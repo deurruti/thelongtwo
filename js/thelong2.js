@@ -72,10 +72,22 @@ $(document).ready(function(){
 
         console.log(dataset[0]);
 
-        // shot_chart.append("image")
-        //     .attr("xlink:href", "../images/court4.png")
-        //     .attr("width", w/2)
-        //     .attr("height", h/2);
+        var tip = d3.tip()
+            //.append("div")
+            //.attr("class", "card")
+            //.append("div")
+            //.attr("class", "card-content")
+            .attr("class", "d3-tip")
+            .offset([-10, 0])
+            .style("opacity", 0)
+            .style("background", "#F5F5F5")
+            .style("z-index", 20)
+            //.style("border", "solid")
+            .style("position", "absolute")
+            .html(function(d) {
+                return d.player_name + "<br>" + "x: " + d.x + "<br>" + "y: " + d.y + "<br>" + "distance: " + d.distance + "<br>" + "opponent: " + d.opponent
+            });
+        
 
         shot_chart.selectAll("circle")
             .data(dataset)
@@ -95,6 +107,8 @@ $(document).ready(function(){
                     return 2;
                 }
             })
+            .on("mouseover", tip.show)
+            .on("mouseout", tip.hide)
             .style("stroke", function(d){
                 return "black";
             })
@@ -108,7 +122,22 @@ $(document).ready(function(){
                 } else {
                     return "gray";
                 }
-            });
+            })
+            // .on("mouseover", function(d){
+            //     tip.transition()
+            //     .duration(200)
+            //     .style("opacity", 0.9);
+            //     tip.html(d.player_name + "<br>" + "x: " + d.x + "<br>" + "y: " + d.y + "<br>" + "distance: " + d.distance + "<br>" + "opponent: " + d.opponent)
+            //     .style("left", (d3.event.pageX + 15) + "px")
+            //     .style("top", (d3.event.pageY - 30) + "px");
+            // })
+            // .on("mouseout", function() {
+            //     tip.transition()
+            //     .duration(200)
+            //     .style("opacity", 0);
+            // });
+
+            shot_chart.call(tip);
     });
 
     //Build season rank list
