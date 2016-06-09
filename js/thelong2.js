@@ -31,7 +31,6 @@ var y = d3.scale.ordinal()
     .rangeRoundBands([0, h/2], .1);
 
 var shot_chart, season_rank, longtwo_rank;
-var bar1;
 
 $(document).ready(function(){
 
@@ -69,6 +68,17 @@ $(document).ready(function(){
 
         console.log(dataset[0]);
 
+        var tip = d3.tip()
+            .attr("class", "d3-tip")
+            .offset([-10, 0])
+            .style("opacity", 0)
+            .style("background", "#F5F5F5")
+            .style("z-index", 20)
+            .style("position", "absolute")
+            .html(function(d) {
+                return d.player_name + "<br>" + "x: " + d.x + "<br>" + "y: " + d.y + "<br>" + "distance: " + d.distance + "<br>" + "opponent: " + d.opponent
+            });
+        
         shot_chart.selectAll("circle")
             .data(dataset)
             .enter()
@@ -87,6 +97,8 @@ $(document).ready(function(){
                     return 2;
                 }
             })
+            .on("mouseover", tip.show)
+            .on("mouseout", tip.hide)
             .style("stroke", function(d){
                 return "black";
             })
@@ -101,6 +113,8 @@ $(document).ready(function(){
                     return "gray";
                 }
             });
+
+        shot_chart.call(tip);
     });
 
     //Build season rank list
@@ -148,7 +162,7 @@ $(document).ready(function(){
 
     d3.csv("../long_two_data/csv_sorted/" + yearSelected + ".csv", function(data){
 
-        bar1 = longtwo_rank.selectAll(".bar")
+        var bar = longtwo_rank.selectAll(".bar")
             .data(data)
             .enter()
             .append("g")
@@ -157,7 +171,7 @@ $(document).ready(function(){
                 return "translate(0," + y(i) + ")";
             });
 
-        bar1.append("rect")
+        bar.append("rect")
             .attr("class", "team2")
             .attr("height", y.rangeBand())
             .attr("width", w/6)
@@ -171,7 +185,7 @@ $(document).ready(function(){
                 updateTeam(d.team);
             });
 
-        bar1.append("text")
+        bar.append("text")
             .attr("class", "teamname")
             .attr("text-anchor", "start")
             .attr("x", 40)
@@ -183,7 +197,6 @@ $(document).ready(function(){
             });
     });
 });
-
 
 // Updates global year varibale
 // Calls functions to update shot chart
@@ -206,15 +219,15 @@ function updateTeam(team) {
     updateShotChart();
 }
 
-
-
 // Transitions Shot Chart
 function updateShotChart(){
     console.log("Team: " + teamSelected + "\n");
     console.log("Year: " + yearSelected + "\n");
     // Get the data again
     d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
+
         var dataset = eval(data.response);
+
         dataset.forEach(function(d) {
             d.player_name = d.player_name;
             d.x = +d.x;
@@ -236,36 +249,36 @@ function updateShotChart(){
             .data(dataset);
 
         shots.enter()
-        .append("circle")
-        .attr("class", "shot")
-        .transition()
-        .attr("cx", function(d) {
-                return xScale(d.x);
-        })
-        .attr("cy", function(d) {
-                return yScale(d.y);
-        })
-        .attr("r", function(d) {
-            if (longtworange(d)) {
-                return 4;
-            } else {
-                return 2;
-            }
-        })
-        .style("stroke", function(d){
-            return "black";
-        })
-        .style("fill", function(d){
-            if (longtworange(d)) {
-                if (d.made){
-                    return "green";
+            .append("circle")
+            .attr("class", "shot")
+            .transition()
+            .attr("cx", function(d) {
+                    return xScale(d.x);
+            })
+            .attr("cy", function(d) {
+                    return yScale(d.y);
+            })
+            .attr("r", function(d) {
+                if (longtworange(d)) {
+                    return 4;
                 } else {
-                    return "red";
+                    return 2;
                 }
-            } else {
-                return "gray";
-            }
-        });
+            })
+            .style("stroke", function(d){
+                return "black";
+            })
+            .style("fill", function(d){
+                if (longtworange(d)) {
+                    if (d.made){
+                        return "green";
+                    } else {
+                        return "red";
+                    }
+                } else {
+                    return "gray";
+                }
+            });
 
         shots.transition()
             .duration(2000)
@@ -303,7 +316,7 @@ function updateShotChart(){
     });
 }
 
-// Transitions Season Rank list
+// Transitions Rank lists
 function updateSeasonRank(){
     console.log("updating season rank");
     console.log("season" + yearSelected);
@@ -311,46 +324,47 @@ function updateSeasonRank(){
         console.log(data);
 
         var transition = season_rank
-        .selectAll(".bar")
-        .data(data)
-        .transition()
-        .duration(2000)
-        .delay(function(d, i) {
-            return i * 50;
-        });
+            .selectAll(".bar")
+            .data(data)
+            .transition()
+            .duration(2000)
+            .delay(function(d, i) {
+                return i * 50;
+            });
 
         transition
-        .select(".team");
+            .select(".team");
 
         transition
-        .select(".teamname")
-        .text(function(d) { 
-            console.log(d.Team);
-            return d.Team;
-        });
+            .select(".teamname")
+            .text(function(d) { 
+                console.log(d.Team);
+                return d.Team;
+            });
 
     });
+
     // Transitions Long Two Rank List
     d3.csv("../long_two_data/csv_sorted/" + yearSelected + ".csv", function(data){
 
         var transition = longtwo_rank
-        .selectAll(".bar")
-        .data(data)
-        .transition()
-        .duration(2000)
-        .delay(function(d, i) {
-            return i * 50;
-        });
+            .selectAll(".bar")
+            .data(data)
+            .transition()
+            .duration(2000)
+            .delay(function(d, i) {
+                return i * 50;
+            });
 
         transition
-        .select(".team2");
+            .select(".team2");
 
         transition
-        .select(".teamname")
-        .text(function(d) { 
-            console.log(d.team);
-            return d.team;
-        });
+            .select(".teamname")
+            .text(function(d) { 
+                console.log(d.team);
+                return d.team;
+            });
 
     });
 

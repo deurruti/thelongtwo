@@ -6,7 +6,9 @@
 		<script type= "text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
         <script src="../js/materialize.min.js"></script>
+        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
         <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
         <link type="text/css" rel="stylesheet" href="../css/thelong2.css">
 	</head>
 
@@ -70,33 +72,33 @@
 	            	<div class="col s6" >
 	            		<div class="row">
 		            		<!-- Basketball court - This code is based on the svg element defined on nbasavant.com -->
-		            		<svg width="525" height="500" id="shot_chart" style="display: block; margin: auto;">
-			            		<circle cx="260" cy="369" r="214" stroke="#F2CFAE" fill="#F2CFAE"></circle>
-			            		<rect x="46" y="340" width="427" height="166" fill="#F2CFAE"></rect>
-			            		<rect x="175" y="274" width="166" height="238" fill="#ebb279"></rect>
-			            		<rect x="172" y="278" width="166" height="228" fill="none" stroke-width="5" stroke="#CB1318"></rect>
-			            		<line x1="194" y1="275" x2="194" y2="500" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="317" y1="275" x2="317" y2="500" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="0" y1="2" x2="525" y2="2" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="0" y1="0" x2="0" y2="500" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="523" y1="0" x2="523" y2="500" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="0" y1="498" x2="525" y2="498" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="160" y1="340" x2="170" y2="340" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="160" y1="395" x2="170" y2="395" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="160" y1="440" x2="170" y2="440" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="160" y1="460" x2="170" y2="460" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="340" y1="340" x2="350" y2="340" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="340" y1="395" x2="350" y2="395" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="340" y1="440" x2="350" y2="440" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="340" y1="460" x2="350" y2="460" stroke-width="5" stroke="#CB1318"></line>
-			            		<circle cx="257" cy="276" r="62" stroke="#CB1318" fill="none" stroke-width="5"></circle>
-			            		<path d="M-217,-2.6574835541497565e-14A217,217 0 1,1 216.9074718600066,6.336296339379686L211.90960384479908,6.190298727873242A212,212 0 1,0 -212,-2.596251214192389e-14Z" fill="#CB1318" transform="translate(260,368)"></path>
-			            		<line x1="45" y1="360" x2="45" y2="500" stroke-width="5" stroke="#CB1318"></line>
-								<line x1="475" y1="360" x2="475" y2="500" stroke-width="5" stroke="#CB1318"></line>
-			            		<path d="M-47,-5.75583995599256e-15A47,47 0 1,1 46.97995934295074,1.3723775481605773L41.98209132774321,1.2263799366541328A42,42 0 1,0 -42,-5.143516556418883e-15Z" fill="#CB1318" transform="translate(780,456)"></path>
-			            		<line x1="211" y1="455" x2="211" y2="475" stroke-width="5" stroke="#CB1318"></line>
-			            		<line x1="299" y1="455" x2="299" y2="475" stroke-width="5" stroke="#CB1318"></line>
-		            		</svg>
+		            		<svg width="525" height="500" id="shot_chart">
+			            		<circle cx="260" cy="369" r="214" stroke="#F2CFAE" fill="none"></circle>
+			            		<rect x="46" y="340" width="427" height="166" fill="none"></rect>
+			            		<rect x="175" y="274" width="166" height="238" fill="none"></rect>
+			            		<rect x="172" y="278" width="166" height="228" fill="none" stroke-width="5" stroke="#000000"></rect>
+			            		<line x1="194" y1="275" x2="194" y2="500" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="317" y1="275" x2="317" y2="500" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="0" y1="2" x2="525" y2="2" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="0" y1="0" x2="0" y2="500" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="523" y1="0" x2="523" y2="500" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="0" y1="498" x2="525" y2="498" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="160" y1="340" x2="170" y2="340" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="160" y1="395" x2="170" y2="395" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="160" y1="440" x2="170" y2="440" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="160" y1="460" x2="170" y2="460" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="340" y1="340" x2="350" y2="340" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="340" y1="395" x2="350" y2="395" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="340" y1="440" x2="350" y2="440" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="340" y1="460" x2="350" y2="460" stroke-width="5" stroke="#000000"></line>
+			            		<circle cx="257" cy="276" r="62" stroke="#000000" fill="none" stroke-width="5"></circle>
+			            		<path d="M-217,-2.6574835541497565e-14A217,217 0 1,1 216.9074718600066,6.336296339379686L211.90960384479908,6.190298727873242A212,212 0 1,0 -212,-2.596251214192389e-14Z" fill="#000000" transform="translate(260,368)"></path>
+			            		<line x1="45" y1="360" x2="45" y2="500" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="475" y1="360" x2="475" y2="500" stroke-width="5" stroke="#000000"></line>
+			            		<path d="M-47,-5.75583995599256e-15A47,47 0 1,1 46.97995934295074,1.3723775481605773L41.98209132774321,1.2263799366541328A42,42 0 1,0 -42,-5.143516556418883e-15Z" fill="#000000" transform="translate(780,456)"></path>
+			            		<line x1="211" y1="455" x2="211" y2="475" stroke-width="5" stroke="#000000"></line>
+			            		<line x1="299" y1="455" x2="299" y2="475" stroke-width="5" stroke="#000000"></line>
+	            			</svg>
 		            	</div>
 		            	<div class="row"> 
 			        		<div class="col s12">
