@@ -65,9 +65,9 @@ $(document).ready(function(){
             d.distance = +d.distance;
             // if 1, then made shot
             if (d.made == 1) {
-                d.made = true;
+                d.made = "Yes";
             } else {
-                d.made = false;
+                d.made = "No";
             }
             d.opponent = d.opponent;
             d.game_date = d.game_date;
@@ -83,7 +83,7 @@ $(document).ready(function(){
             .style("z-index", 20)
             .style("position", "absolute")
             .html(function(d) {
-                return d.player_name + "<br>" + "x: " + d.x + "<br>" + "y: " + d.y + "<br>" + "distance: " + d.distance + "<br>" + "opponent: " + d.opponent
+                return "Shot by: " + d.player_name + "<br>" + "Distance: " + d.distance + "<br>" + "Made: " + d.made
             });
         
         shot_chart.selectAll("circle")
@@ -111,10 +111,10 @@ $(document).ready(function(){
             })
             .style("fill", function(d){
                 if (longtworange(d)) {
-                    if (d.made){
-                        return "green";
+                    if (d.made === "Yes"){
+                        return "#4daf4a";
                     } else {
-                        return "red";
+                        return "#e41a1c";
                     }
                 } else {
                     return "gray";
@@ -149,32 +149,32 @@ $(document).ready(function(){
                     prevTeamElement = d3.select(this);
                     prevTeamElementShot = d3.select(this);
                     console.log("match season rank");
-                    return "#7eaacd";
+                    return "#ff7f00";
                 }else{
-                    return "steelblue";
+                    return "#377eb8";
                 }
             })
             .on("mouseover", function(d){
                 if(d.Team.toLowerCase() === teamSelected){
-                   d3.select(this).style("fill", "#7eaacd"); 
+                   d3.select(this).style("fill", "#ff7f00"); 
                 }else{
-                   d3.select(this).style("fill","red");  
+                   d3.select(this).style("fill","#7eaacd");  
                 }
                 
             })
             .on("mouseout", function(d){
                 if(d.Team.toLowerCase() === teamSelected){
-                    d3.select(this).style("fill", "#7eaacd");
+                    d3.select(this).style("fill", "#ff7f00");
                 }else{
                     console.log("d.Team is: ", d.Team);
                     console.log("teamSelected: ", teamSelected);
-                    d3.select(this).style("fill","steelblue");  
+                    d3.select(this).style("fill","#377eb8");  
                 }
                 
             })
             .on("click", function(d, i) {
-                d3.select(this).style("fill", "#7eaacd")
-                prevTeamElement.style("fill", "steelblue");
+                d3.select(this).style("fill", "#ff7f00")
+                prevTeamElement.style("fill", "#377eb8");
                 var longRankElement = $(".long_two_g");
                 var seasonRankElement = $(".season_rank_g");
                 // iterate through season w/l rankings
@@ -186,11 +186,11 @@ $(document).ready(function(){
                     if(currentIteration === d.Team.toLowerCase()){
                         // update the fill style to reflect selection
                         console.log("okay: ", longRankElement[0].children[i].children[0].style);
-                        longRankElement[0].children[i].children[0].style.fill = "#7eaacd";
-                        //prevTeamElementLong.style("fill", "steelblue");
-                        //prevTeamElementShot.style("fill", "steelblue");
+                        longRankElement[0].children[i].children[0].style.fill = "#ff7f00";
+                        //prevTeamElementLong.style("fill", "#377eb8");
+                        //prevTeamElementShot.style("fill", "#377eb8");
                     }else{
-                        longRankElement[0].children[i].children[0].style.fill = "steelblue";
+                        longRankElement[0].children[i].children[0].style.fill = "#377eb8";
                     }
                     console.log("seasonRankElement[0] child: ", longRankElement[0].children[i].__data__.team);
                 }
@@ -198,7 +198,7 @@ $(document).ready(function(){
                 // iterate through season w/l rankings
                 for(var i = 0; i < seasonRankElement[0].children.length; ++i){
                     var currentIteration = seasonRankElement[0].children[i].__data__.Team.toLowerCase();
-                    seasonRankElement[0].children[i].children[0].style.fill = "steelblue";
+                    seasonRankElement[0].children[i].children[0].style.fill = "#377eb8";
 
                     console.log("seasonRankElement[0] child: ", seasonRankElement[0].children[i].__data__.Team);
                 }
@@ -242,34 +242,34 @@ $(document).ready(function(){
                 console.log("d.team: append: ", d.team.toLowerCase());
                 if(d.team.toLowerCase() === teamSelected){
                     prevTeamElementLong = d3.select(this);
-                    return "#7eaacd";
+                    return "#ff7f00";
                 }else{
-                    return "steelblue";
+                    return "#377eb8";
                 }
             })
             .on("mouseover", function(d){
                 if(d.team.toLowerCase() === teamSelected){
-                   d3.select(this).style("fill", "#7eaacd"); 
+                   d3.select(this).style("fill", "#ff7f00"); 
                 }else{
-                   d3.select(this).style("fill","red");  
+                   d3.select(this).style("fill","#7eaacd");  
                 }
             })
             .on("mouseout", function(d){
                 if(d.team.toLowerCase() === teamSelected){
-                    d3.select(this).style("fill", "#7eaacd");
+                    d3.select(this).style("fill", "#ff7f00");
                 }else{
                     console.log("d.Team is: ", d.team);
                     console.log("teamSelected: ", teamSelected);
-                    d3.select(this).style("fill","steelblue");  
+                    d3.select(this).style("fill","#377eb8");  
                 }
             })
             .on("click", function(d, i) {
                 console.log("d.team: ", d.team);
-                d3.select(this).style("fill", "#7eaacd")
+                d3.select(this).style("fill", "#ff7f00")
                 
                 console.log("PREVIOUS: ", prevTeamElement[0][0].style);
-                prevTeamElement[0][0].style.fill = "steelblue";
-                prevTeamElement.style("fill", "steelblue");
+                prevTeamElement[0][0].style.fill = "#377eb8";
+                prevTeamElement.style("fill", "#377eb8");
                 
                 var seasonRankElement = $(".season_rank_g");
                 // iterate through season w/l rankings
@@ -281,11 +281,11 @@ $(document).ready(function(){
                     if(currentIteration === d.team.toLowerCase()){
                         // update the fill style to reflect selection
                         console.log("okay: ", seasonRankElement[0].children[i].children[0].style);
-                        seasonRankElement[0].children[i].children[0].style.fill = "#7eaacd";
-                        //prevTeamElementLong.style("fill", "steelblue");
-                        //prevTeamElementShot.style("fill", "steelblue");
+                        seasonRankElement[0].children[i].children[0].style.fill = "#ff7f00";
+                        //prevTeamElementLong.style("fill", "#377eb8");
+                        //prevTeamElementShot.style("fill", "#377eb8");
                     }else{
-                        seasonRankElement[0].children[i].children[0].style.fill = "steelblue";
+                        seasonRankElement[0].children[i].children[0].style.fill = "#377eb8";
                     }
                     console.log("seasonRankElement[0] child: ", seasonRankElement[0].children[i].__data__.Team);
                 }
@@ -295,12 +295,12 @@ $(document).ready(function(){
                 for(var i = 0; i < longRankElement[0].children.length; ++i){
                     var currentIteration = longRankElement[0].children[i].__data__.team.toLowerCase();
                     
-                    longRankElement[0].children[i].children[0].style.fill = "steelblue";
+                    longRankElement[0].children[i].children[0].style.fill = "#377eb8";
                     console.log("seasonRankElement[0] child: ", longRankElement[0].children[i].__data__.team);
                 }            
                 console.log("seasonrank[0]: ", seasonRankElement[0].children);
                 console.log("seasonRankElement: ", seasonRankElement);
-                //prevTeamElement.style("fill", "steelblue");
+                //prevTeamElement.style("fill", "#377eb8");
                 prevTeamElement = d3.select(this);
                 prevTeamElementLong = d3.select(this);
                 elementSelected = d3.select(this);
@@ -351,7 +351,7 @@ function updateShotChart(){
     //elementSelected.style("fill", "#7eaacd");
     // Get the data again
     d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
-        elementSelected.style("fill", "#7eaacd");
+        elementSelected.style("fill", "#ff7f00");
         var dataset = eval(data.response);
 
         dataset.forEach(function(d) {
@@ -361,9 +361,9 @@ function updateShotChart(){
             d.distance = +d.distance;
             // if 1, then made shot
             if (d.made == 1) {
-                d.made = true;
+                d.made = "Yes";
             } else {
-                d.made = false;
+                d.made = "No";
             }
             d.opponent = d.opponent;
             d.game_date = d.game_date;
@@ -396,10 +396,10 @@ function updateShotChart(){
             })
             .style("fill", function(d){
                 if (longtworange(d)) {
-                    if (d.made){
-                        return "green";
+                    if (d.made === "Yes"){
+                        return "#4daf4a";
                     } else {
-                        return "red";
+                        return "#e41a1c";
                     }
                 } else {
                     return "gray";
@@ -426,10 +426,10 @@ function updateShotChart(){
             })
             .style("fill", function(d){
                 if (longtworange(d)) {
-                    if (d.made){
-                        return "green";
+                    if (d.made === "Yes"){
+                        return "#4daf4a";
                     } else {
-                        return "red";
+                        return "#e41a1c";
                     }
                 } else {
                     return "gray";
@@ -465,11 +465,11 @@ function updateSeasonRank(){
             if(currentIteration === teamSelected){
                 // update the fill style to reflect selection
                 console.log("okay: ", seasonRankElement[0].children[i].children[0].style);
-                seasonRankElement[0].children[i].children[0].style.fill = "#7eaacd";
-                //prevTeamElementLong.style("fill", "steelblue");
-                //prevTeamElementShot.style("fill", "steelblue");
+                seasonRankElement[0].children[i].children[0].style.fill = "#ff7f00";
+                //prevTeamElementLong.style("fill", "#377eb8");
+                //prevTeamElementShot.style("fill", "#377eb8");
             }else{
-                seasonRankElement[0].children[i].children[0].style.fill = "steelblue";
+                seasonRankElement[0].children[i].children[0].style.fill = "#377eb8";
             }
             console.log("seasonRankElement[0] child: ", seasonRankElement[0].children[i].__data__.Team);
         }
@@ -508,11 +508,11 @@ function updateSeasonRank(){
             if(currentIteration === teamSelected){
                 // update the fill style to reflect selection
                 console.log("okay: ", longRankElement[0].children[i].children[0].style);
-                longRankElement[0].children[i].children[0].style.fill = "#7eaacd";
-                //prevTeamElementLong.style("fill", "steelblue");
-                //prevTeamElementShot.style("fill", "steelblue");
+                longRankElement[0].children[i].children[0].style.fill = "#ff7f00";
+                //prevTeamElementLong.style("fill", "#377eb8");
+                //prevTeamElementShot.style("fill", "#377eb8");
             }else{
-                longRankElement[0].children[i].children[0].style.fill = "steelblue";
+                longRankElement[0].children[i].children[0].style.fill = "#377eb8";
             }
             console.log("seasonRankElement[0] child: ", longRankElement[0].children[i].__data__.team);
         }

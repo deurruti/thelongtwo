@@ -30,9 +30,13 @@ body {
 	font-family: "Roboto";
 	position: center;
 	text-align: center;
-	font-size: 20px;
+	font-size: 17px;
 	color: black;
 	border-radius: 10px;
 	pointer-events: none;
 }
 
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after {
+	background-color: #377eb8 !important;
+	border: #377eb8 !important;
+}

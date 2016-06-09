@@ -43,13 +43,13 @@
 			        			<ul>
 			        				<li >
 					        			<svg width="30" height="30">
-					        				<circle cx="15" cy="25	" r="4" stroke="black" fill="red"></circle>
+					        				<circle cx="15" cy="25	" r="4" stroke="black" fill="#e41a1c"></circle>
 					        			</svg>
 					        			<p style="display: inline;">= shot made</p>
 			        				</li>
 			        				<li>
 					        			<svg width="30" height="30">
-					        				<circle cx="15" cy="25" r="4" stroke="black" fill="green"></circle>
+					        				<circle cx="15" cy="25" r="4" stroke="black" fill="#4daf4a"></circle>
 					        			</svg>
 					        			<p style="display: inline;">= shot missed</p>					        			
 			        				</li>
@@ -72,7 +72,7 @@
 	            	<div class="col s6" >
 	            		<div class="row">
 		            		<!-- Basketball court - This code is based on the svg element defined on nbasavant.com -->
-		            		<svg width="525" height="500" id="shot_chart">
+		            		<svg width="525" height="500" id="shot_chart" style="display: block; margin: auto;">
 			            		<circle cx="260" cy="369" r="214" stroke="#F2CFAE" fill="none"></circle>
 			            		<rect x="46" y="340" width="427" height="166" fill="none"></rect>
 			            		<rect x="175" y="274" width="166" height="238" fill="none"></rect>
@@ -110,27 +110,27 @@
 			            		<a class="col s2 waves-effect waves-light btn" onclick="updateYear(2015);">'15 - '16</a> -->
 			            		<form id="radios">
 						        	<p class="col s2"> 
-					            		<input id="ten" type="radio" name="g1" value="2010" onclick="updateYear(value);" checked/> 
+					            		<input class="radios" id="ten" type="radio" name="g1" value="2010" onclick="updateYear(value);" checked/> 
 					            		<label for="ten" style="font-size: 90%">'10 - '11</label>
 					            	</p>
 					            	<p class="col s2">
-					            		<input id="eleven" type="radio" name="g1" value="2011" onclick="updateYear(value);"/> 
+					            		<input class="radios" id="eleven" type="radio" name="g1" value="2011" onclick="updateYear(value);"/> 
 					            		<label for="eleven" style="font-size: 90%">'11 - '12</label>
 					            	</p>
 					            	<p class="col s2">
-					            		<input id="twelve" type="radio" name="g1" value="2012" onclick="updateYear(value);"/> 
+					            		<input class="radios" id="twelve" type="radio" name="g1" value="2012" onclick="updateYear(value);"/> 
 					            		<label for="twelve" style="font-size: 90%">'12 - '13</label>
 					            	</p>
 					            	<p class="col s2">
-					            		<input id="thirteen" type="radio" name="g1" value="2013" onclick="updateYear(value);"/> 
+					            		<input class="radios" id="thirteen" type="radio" name="g1" value="2013" onclick="updateYear(value);"/> 
 					            		<label for="thirteen" style="font-size: 90%">'13 - '14</label>
 					            	</p>
 					            	<p class="col s2">
-					            		<input id="fourteen" type="radio" name="g1" value="2014" onclick="updateYear(value);"/> 
+					            		<input class="radios" id="fourteen" type="radio" name="g1" value="2014" onclick="updateYear(value);"/> 
 					            		<label for="fourteen" style="font-size: 90%">'14 - '15</label>
 					            	</p>
 					            	<p class="col s2">
-					            		<input id="fifteen" type="radio" name="g1" value="2015" onclick="updateYear(value);"/> 
+					            		<input class="radios" id="fifteen" type="radio" name="g1" value="2015" onclick="updateYear(value);"/> 
 					            		<label for="fifteen" style="font-size: 90%">'15 - '16</label>
 					            	</p>
 				         		</form>
