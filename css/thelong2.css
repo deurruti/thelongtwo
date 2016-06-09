@@ -1,3 +1,7 @@
+body {
+	background-color: #faf7f3;
+}
+
 .axis line, .axis text, .axis path{
     /*display: none;*/
     /*stroke: #000;*/
@@ -17,11 +21,18 @@
 }
 
 
-
 .bar text {
-  fill: white;
+	fill: white;
 }
 
-.year-btn{
 
+.d3-tip {
+	font-family: "Roboto";
+	position: center;
+	text-align: center;
+	font-size: 20px;
+	color: black;
+	border-radius: 10px;
+	pointer-events: none;
 }
+

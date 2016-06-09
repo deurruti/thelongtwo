@@ -36,26 +36,22 @@ var y = d3.scale.ordinal()
     .rangeRoundBands([0, h/2], .1);
 
 var shot_chart, season_rank, longtwo_rank;
-var bar1;
 
 $(document).ready(function(){
 
     shot_chart = d3.select("#shot_chart");
-        // .append("svg")
-        // .attr("width", w/2 + padding)
-        // .attr("height", h/2 + padding);
 
     season_rank = d3.select("#season_rank")
         .append("svg")
         .attr("width", w/4 + padding)
-        .attr("height", h/2 + padding)
+        .attr("height", h/2)
         .append("g")
         .attr("class", "season_rank_g");
 
     longtwo_rank = d3.select("#longtwo_rank")
         .append("svg")
         .attr("width", w/4 + padding)
-        .attr("height", h/2 + padding)
+        .attr("height", h/2)
         .append("g")
         .attr("class", "long_two_g");
 
@@ -79,11 +75,17 @@ $(document).ready(function(){
 
         console.log(dataset[0]);
 
-        // shot_chart.append("image")
-        //     .attr("xlink:href", "../images/court4.png")
-        //     .attr("width", w/2)
-        //     .attr("height", h/2);
-
+        var tip = d3.tip()
+            .attr("class", "d3-tip")
+            .offset([-10, 0])
+            .style("opacity", 0)
+            .style("background", "#F5F5F5")
+            .style("z-index", 20)
+            .style("position", "absolute")
+            .html(function(d) {
+                return d.player_name + "<br>" + "x: " + d.x + "<br>" + "y: " + d.y + "<br>" + "distance: " + d.distance + "<br>" + "opponent: " + d.opponent
+            });
+        
         shot_chart.selectAll("circle")
             .data(dataset)
             .enter()
@@ -102,6 +104,8 @@ $(document).ready(function(){
                     return 2;
                 }
             })
+            .on("mouseover", tip.show)
+            .on("mouseout", tip.hide)
             .style("stroke", function(d){
                 return "black";
             })
@@ -116,6 +120,8 @@ $(document).ready(function(){
                     return "gray";
                 }
             });
+
+        shot_chart.call(tip);
     });
 
     //Build season rank list
@@ -129,8 +135,7 @@ $(document).ready(function(){
             .append("g")
             .attr("class", "bar")
             .attr("transform", function(d, i) {
-                console.log(i); 
-                //if (d.Team !== "Bobcats") 
+                console.log(i);
                 return "translate(0," + y(i) + ")";
             });
 
@@ -212,7 +217,6 @@ $(document).ready(function(){
             .attr("dy", ".35em")
             .text(function(d) { 
                 console.log(d.Team);
-                //if (d.Team !== "Bobcats") 
                 return d.Team;
             });
 
@@ -221,7 +225,7 @@ $(document).ready(function(){
 
     d3.csv("../long_two_data/csv_sorted/" + yearSelected + ".csv", function(data){
 
-        bar1 = longtwo_rank.selectAll(".bar")
+        var bar = longtwo_rank.selectAll(".bar")
             .data(data)
             .enter()
             .append("g")
@@ -230,7 +234,7 @@ $(document).ready(function(){
                 return "translate(0," + y(i) + ")";
             });
 
-        bar1.append("rect")
+        bar.append("rect")
             .attr("class", "team2")
             .attr("height", y.rangeBand())
             .attr("width", w/7)
@@ -305,7 +309,7 @@ $(document).ready(function(){
                 updateTeam(d.team);
             });
 
-        bar1.append("text")
+        bar.append("text")
             .attr("class", "teamname")
             .attr("text-anchor", "start")
             .attr("x", 40)
@@ -317,7 +321,6 @@ $(document).ready(function(){
             });
     });
 });
-
 
 // Updates global year varibale
 // Calls functions to update shot chart
@@ -340,8 +343,6 @@ function updateTeam(team) {
     updateShotChart();
 }
 
-
-
 // Transitions Shot Chart
 function updateShotChart(){
     console.log("Team: " + teamSelected + "\n");
@@ -352,6 +353,7 @@ function updateShotChart(){
     d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
         elementSelected.style("fill", "#7eaacd");
         var dataset = eval(data.response);
+
         dataset.forEach(function(d) {
             d.player_name = d.player_name;
             d.x = +d.x;
@@ -373,39 +375,37 @@ function updateShotChart(){
             .data(dataset);
 
         shots.enter()
-        .append("circle")
-        .attr("class", "shot")
-        .transition()
-        .attr("cx", function(d) {
-                return xScale(d.x);
-        })
-        .attr("cy", function(d) {
-                return yScale(d.y);
-        })
-        .attr("r", function(d) {
-            if (longtworange(d)) {
-                return 4;
-            } else {
-                return 2;
-            }
-        })
-        .style("stroke", function(d){
-            return "black";
-        })
-        .style("fill", function(d){
-            if (longtworange(d)) {
-                if (d.made){
-                    return "green";
+            .append("circle")
+            .attr("class", "shot")
+            .transition()
+            .attr("cx", function(d) {
+                    return xScale(d.x);
+            })
+            .attr("cy", function(d) {
+                    return yScale(d.y);
+            })
+            .attr("r", function(d) {
+                if (longtworange(d)) {
+                    return 4;
                 } else {
-                    return "red";
+                    return 2;
                 }
-            } else {
-                return "gray";
-            }
-        });
-        
-        //elementSelected.style("fill", "#7eaacd");
-        
+            })
+            .style("stroke", function(d){
+                return "black";
+            })
+            .style("fill", function(d){
+                if (longtworange(d)) {
+                    if (d.made){
+                        return "green";
+                    } else {
+                        return "red";
+                    }
+                } else {
+                    return "gray";
+                }
+            });
+
         shots.transition()
             .duration(2000)
             .attr("cx", function(d) {
@@ -442,7 +442,7 @@ function updateShotChart(){
     });
 }
 
-// Transitions Season Rank list
+// Transitions Rank lists
 function updateSeasonRank(){
     console.log("updating season rank");
     console.log("season" + yearSelected);
@@ -475,20 +475,17 @@ function updateSeasonRank(){
         }
 
         transition
-        .select(".team");
-        // .attr("transform", function(d, i) { 
-        //     return "translate(0," + y(i) + ")";
-        // });
+            .select(".team");
 
         transition
-        .select(".teamname")
-        .text(function(d) { 
-            console.log(d.Team);
-            //if (d.Team !== "Bobcats") 
-            return d.Team;
-        });
-        
+            .select(".teamname")
+            .text(function(d) { 
+                console.log(d.Team);
+                return d.Team;
+            });
+
     });
+
     // Transitions Long Two Rank List
     d3.csv("../long_two_data/csv_sorted/" + yearSelected + ".csv", function(data){
         var longRankElement = $(".long_two_g");
@@ -521,14 +518,14 @@ function updateSeasonRank(){
         }
 
         transition
-        .select(".team2");
+            .select(".team2");
 
         transition
-        .select(".teamname")
-        .text(function(d) { 
-            console.log(d.team);
-            return d.team;
-        });
+            .select(".teamname")
+            .text(function(d) { 
+                console.log(d.team);
+                return d.team;
+            });
 
         
 
