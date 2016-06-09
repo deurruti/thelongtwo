@@ -17,9 +17,19 @@
 }
 
 .bar rect {
-  fill: steelblue;
+	fill: royalblue;
 }
 
 .bar text {
-  fill: white;
+	fill: white;
+}
+
+.d3-tip {
+	font-family: "Roboto";
+	position: center;
+	text-align: center;
+	font-size: 20px;
+	color: black;
+	border-radius: 10px;
+	pointer-events: none;
 }
