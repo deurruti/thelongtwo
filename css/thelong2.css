@@ -16,10 +16,12 @@
 	width: 98% !important;
 }
 
-.bar rect {
-  fill: steelblue;
-}
+
 
 .bar text {
   fill: white;
+}
+
+.year-btn{
+
 }

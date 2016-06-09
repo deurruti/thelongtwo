@@ -1,6 +1,11 @@
 //global variable for year
 var yearSelected = 2010; 
 var teamSelected = "warriors";
+var prevTeam = "warriors";
+var prevTeamElement;
+var prevTeamElementShot;
+var prevTeamElementLong;
+var elementSelected;
 
 //Code for D3 starts here
 //Width and height
@@ -44,13 +49,15 @@ $(document).ready(function(){
         .append("svg")
         .attr("width", w/4 + padding)
         .attr("height", h/2 + padding)
-        .append("g");
+        .append("g")
+        .attr("class", "season_rank_g");
 
     longtwo_rank = d3.select("#longtwo_rank")
         .append("svg")
         .attr("width", w/4 + padding)
         .attr("height", h/2 + padding)
-        .append("g");
+        .append("g")
+        .attr("class", "long_two_g");
 
     // Build shot chart
     d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
@@ -113,7 +120,7 @@ $(document).ready(function(){
 
     //Build season rank list
     d3.csv("../outcomes/" + yearSelected + "_outcome.csv", function(data){
-
+        
         console.log(data);
 
         var bar = season_rank.selectAll(".bar")
@@ -130,14 +137,70 @@ $(document).ready(function(){
         bar.append("rect")
             .attr("class", "team")
             .attr("height", y.rangeBand())
-            .attr("width", w/6)
-            .on("mouseover", function(){
-                d3.select(this).style("fill","red");
+            .attr("width", w/7)
+            .attr("fill", function(d){
+                console.log("d.team.toLowerCase: ", d.Team.toLowerCase());
+                if(d.Team.toLowerCase() === teamSelected){
+                    prevTeamElement = d3.select(this);
+                    prevTeamElementShot = d3.select(this);
+                    console.log("match season rank");
+                    return "#7eaacd";
+                }else{
+                    return "steelblue";
+                }
             })
-            .on("mouseout", function(){
-                d3.select(this).style("fill","steelblue");
+            .on("mouseover", function(d){
+                if(d.Team.toLowerCase() === teamSelected){
+                   d3.select(this).style("fill", "#7eaacd"); 
+                }else{
+                   d3.select(this).style("fill","red");  
+                }
+                
+            })
+            .on("mouseout", function(d){
+                if(d.Team.toLowerCase() === teamSelected){
+                    d3.select(this).style("fill", "#7eaacd");
+                }else{
+                    console.log("d.Team is: ", d.Team);
+                    console.log("teamSelected: ", teamSelected);
+                    d3.select(this).style("fill","steelblue");  
+                }
+                
             })
             .on("click", function(d, i) {
+                d3.select(this).style("fill", "#7eaacd")
+                prevTeamElement.style("fill", "steelblue");
+                var longRankElement = $(".long_two_g");
+                var seasonRankElement = $(".season_rank_g");
+                // iterate through season w/l rankings
+                for(var i = 0; i < longRankElement[0].children.length; ++i){
+                    var currentIteration = longRankElement[0].children[i].__data__.team.toLowerCase();
+                    
+                    // if teamName selected in long two chart is found in
+                    // season rankings
+                    if(currentIteration === d.Team.toLowerCase()){
+                        // update the fill style to reflect selection
+                        console.log("okay: ", longRankElement[0].children[i].children[0].style);
+                        longRankElement[0].children[i].children[0].style.fill = "#7eaacd";
+                        //prevTeamElementLong.style("fill", "steelblue");
+                        //prevTeamElementShot.style("fill", "steelblue");
+                    }else{
+                        longRankElement[0].children[i].children[0].style.fill = "steelblue";
+                    }
+                    console.log("seasonRankElement[0] child: ", longRankElement[0].children[i].__data__.team);
+                }
+            
+                // iterate through season w/l rankings
+                for(var i = 0; i < seasonRankElement[0].children.length; ++i){
+                    var currentIteration = seasonRankElement[0].children[i].__data__.Team.toLowerCase();
+                    seasonRankElement[0].children[i].children[0].style.fill = "steelblue";
+
+                    console.log("seasonRankElement[0] child: ", seasonRankElement[0].children[i].__data__.Team);
+                }
+                prevTeamElement = d3.select(this);
+                //elementSelected = d3.select(this);
+                console.log("season_rank.click: ", d.Team);
+                teamSelected = d.Team;
                 updateTeam(d.Team);
             });
 
@@ -170,14 +233,75 @@ $(document).ready(function(){
         bar1.append("rect")
             .attr("class", "team2")
             .attr("height", y.rangeBand())
-            .attr("width", w/6)
-            .on("mouseover", function(){
-                d3.select(this).style("fill","red");
+            .attr("width", w/7)
+            .attr("fill", function(d){
+                console.log("d.team: append: ", d.team.toLowerCase());
+                if(d.team.toLowerCase() === teamSelected){
+                    prevTeamElementLong = d3.select(this);
+                    return "#7eaacd";
+                }else{
+                    return "steelblue";
+                }
             })
-            .on("mouseout", function(){
-                d3.select(this).style("fill","steelblue");
+            .on("mouseover", function(d){
+                if(d.team.toLowerCase() === teamSelected){
+                   d3.select(this).style("fill", "#7eaacd"); 
+                }else{
+                   d3.select(this).style("fill","red");  
+                }
+            })
+            .on("mouseout", function(d){
+                if(d.team.toLowerCase() === teamSelected){
+                    d3.select(this).style("fill", "#7eaacd");
+                }else{
+                    console.log("d.Team is: ", d.team);
+                    console.log("teamSelected: ", teamSelected);
+                    d3.select(this).style("fill","steelblue");  
+                }
             })
             .on("click", function(d, i) {
+                console.log("d.team: ", d.team);
+                d3.select(this).style("fill", "#7eaacd")
+                
+                console.log("PREVIOUS: ", prevTeamElement[0][0].style);
+                prevTeamElement[0][0].style.fill = "steelblue";
+                prevTeamElement.style("fill", "steelblue");
+                
+                var seasonRankElement = $(".season_rank_g");
+                // iterate through season w/l rankings
+                for(var i = 0; i < seasonRankElement[0].children.length; ++i){
+                    var currentIteration = seasonRankElement[0].children[i].__data__.Team.toLowerCase();
+                    
+                    // if teamName selected in long two chart is found in
+                    // season rankings
+                    if(currentIteration === d.team.toLowerCase()){
+                        // update the fill style to reflect selection
+                        console.log("okay: ", seasonRankElement[0].children[i].children[0].style);
+                        seasonRankElement[0].children[i].children[0].style.fill = "#7eaacd";
+                        //prevTeamElementLong.style("fill", "steelblue");
+                        //prevTeamElementShot.style("fill", "steelblue");
+                    }else{
+                        seasonRankElement[0].children[i].children[0].style.fill = "steelblue";
+                    }
+                    console.log("seasonRankElement[0] child: ", seasonRankElement[0].children[i].__data__.Team);
+                }
+            
+                var longRankElement = $(".long_two_g");
+                // iterate through season w/l rankings
+                for(var i = 0; i < longRankElement[0].children.length; ++i){
+                    var currentIteration = longRankElement[0].children[i].__data__.team.toLowerCase();
+                    
+                    longRankElement[0].children[i].children[0].style.fill = "steelblue";
+                    console.log("seasonRankElement[0] child: ", longRankElement[0].children[i].__data__.team);
+                }            
+                console.log("seasonrank[0]: ", seasonRankElement[0].children);
+                console.log("seasonRankElement: ", seasonRankElement);
+                //prevTeamElement.style("fill", "steelblue");
+                prevTeamElement = d3.select(this);
+                prevTeamElementLong = d3.select(this);
+                elementSelected = d3.select(this);
+                //elementSelected.style.fill = "#7eaacd";
+                teamSelected = d.team;
                 updateTeam(d.team);
             });
 
@@ -222,8 +346,11 @@ function updateTeam(team) {
 function updateShotChart(){
     console.log("Team: " + teamSelected + "\n");
     console.log("Year: " + yearSelected + "\n");
+    console.log("teamSelected in updateShotChart: ", teamSelected);
+    //elementSelected.style("fill", "#7eaacd");
     // Get the data again
     d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
+        elementSelected.style("fill", "#7eaacd");
         var dataset = eval(data.response);
         dataset.forEach(function(d) {
             d.player_name = d.player_name;
@@ -276,7 +403,9 @@ function updateShotChart(){
                 return "gray";
             }
         });
-
+        
+        //elementSelected.style("fill", "#7eaacd");
+        
         shots.transition()
             .duration(2000)
             .attr("cx", function(d) {
@@ -319,15 +448,31 @@ function updateSeasonRank(){
     console.log("season" + yearSelected);
     d3.csv("../outcomes/" + yearSelected + "_outcome.csv", function(data){
         console.log(data);
+        
 
         var transition = season_rank
         .selectAll(".bar")
         .data(data)
         .transition()
-        .duration(2000)
-        .delay(function(d, i) {
-            return i * 50;
-        });
+        .duration(2000);
+        var seasonRankElement = $(".season_rank_g");
+        // iterate through season w/l rankings
+        for(var i = 0; i < seasonRankElement[0].children.length; ++i){
+            var currentIteration = seasonRankElement[0].children[i].__data__.Team.toLowerCase();
+
+            // if teamName selected in long two chart is found in
+            // season rankings
+            if(currentIteration === teamSelected){
+                // update the fill style to reflect selection
+                console.log("okay: ", seasonRankElement[0].children[i].children[0].style);
+                seasonRankElement[0].children[i].children[0].style.fill = "#7eaacd";
+                //prevTeamElementLong.style("fill", "steelblue");
+                //prevTeamElementShot.style("fill", "steelblue");
+            }else{
+                seasonRankElement[0].children[i].children[0].style.fill = "steelblue";
+            }
+            console.log("seasonRankElement[0] child: ", seasonRankElement[0].children[i].__data__.Team);
+        }
 
         transition
         .select(".team");
@@ -342,19 +487,38 @@ function updateSeasonRank(){
             //if (d.Team !== "Bobcats") 
             return d.Team;
         });
-
+        
     });
     // Transitions Long Two Rank List
     d3.csv("../long_two_data/csv_sorted/" + yearSelected + ".csv", function(data){
+        var longRankElement = $(".long_two_g");
+        var seasonRankElement = $(".season_rank_g");
 
+        
+        
         var transition = longtwo_rank
         .selectAll(".bar")
         .data(data)
         .transition()
-        .duration(2000)
-        .delay(function(d, i) {
-            return i * 50;
-        });
+        .duration(2000);
+        
+        // iterate through season w/l rankings
+        for(var i = 0; i < longRankElement[0].children.length; ++i){
+            var currentIteration = longRankElement[0].children[i].__data__.team.toLowerCase();
+
+            // if teamName selected in long two chart is found in
+            // season rankings
+            if(currentIteration === teamSelected){
+                // update the fill style to reflect selection
+                console.log("okay: ", longRankElement[0].children[i].children[0].style);
+                longRankElement[0].children[i].children[0].style.fill = "#7eaacd";
+                //prevTeamElementLong.style("fill", "steelblue");
+                //prevTeamElementShot.style("fill", "steelblue");
+            }else{
+                longRankElement[0].children[i].children[0].style.fill = "steelblue";
+            }
+            console.log("seasonRankElement[0] child: ", longRankElement[0].children[i].__data__.team);
+        }
 
         transition
         .select(".team2");
@@ -366,7 +530,13 @@ function updateSeasonRank(){
             return d.team;
         });
 
+        
+
     });
+    
+
+    
+
 
 }
 
