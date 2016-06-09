@@ -36,20 +36,17 @@ var bar1;
 $(document).ready(function(){
 
     shot_chart = d3.select("#shot_chart");
-        // .append("svg")
-        // .attr("width", w/2 + padding)
-        // .attr("height", h/2 + padding);
 
     season_rank = d3.select("#season_rank")
         .append("svg")
         .attr("width", w/4 + padding)
-        .attr("height", h/2 + padding)
+        .attr("height", h/2)
         .append("g");
 
     longtwo_rank = d3.select("#longtwo_rank")
         .append("svg")
         .attr("width", w/4 + padding)
-        .attr("height", h/2 + padding)
+        .attr("height", h/2)
         .append("g");
 
     // Build shot chart
@@ -71,11 +68,6 @@ $(document).ready(function(){
         });
 
         console.log(dataset[0]);
-
-        // shot_chart.append("image")
-        //     .attr("xlink:href", "../images/court4.png")
-        //     .attr("width", w/2)
-        //     .attr("height", h/2);
 
         shot_chart.selectAll("circle")
             .data(dataset)
@@ -122,8 +114,7 @@ $(document).ready(function(){
             .append("g")
             .attr("class", "bar")
             .attr("transform", function(d, i) {
-                console.log(i); 
-                //if (d.Team !== "Bobcats") 
+                console.log(i);
                 return "translate(0," + y(i) + ")";
             });
 
@@ -149,7 +140,6 @@ $(document).ready(function(){
             .attr("dy", ".35em")
             .text(function(d) { 
                 console.log(d.Team);
-                //if (d.Team !== "Bobcats") 
                 return d.Team;
             });
 
@@ -331,15 +321,11 @@ function updateSeasonRank(){
 
         transition
         .select(".team");
-        // .attr("transform", function(d, i) { 
-        //     return "translate(0," + y(i) + ")";
-        // });
 
         transition
         .select(".teamname")
         .text(function(d) { 
             console.log(d.Team);
-            //if (d.Team !== "Bobcats") 
             return d.Team;
         });
 
