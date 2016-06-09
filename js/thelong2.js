@@ -56,7 +56,7 @@ $(document).ready(function(){
         .attr("class", "long_two_g");
 
     // Build shot chart
-    d3.xhr("../team_data/" + teamSelected + "/" + yearSelected, function(data) {
+    d3.xhr("team_data/" + teamSelected + "/" + yearSelected, function(data) {
         var dataset = eval(data.response);
         dataset.forEach(function(d) {
             d.player_name = d.player_name;
@@ -125,7 +125,7 @@ $(document).ready(function(){
     });
 
     //Build season rank list
-    d3.csv("../outcomes/" + yearSelected + "_outcome.csv", function(data){
+    d3.csv("outcomes/" + yearSelected + "_outcome.csv", function(data){
         
         console.log(data);
 
@@ -223,7 +223,7 @@ $(document).ready(function(){
         
     });
 
-    d3.csv("../long_two_data/csv_sorted/" + yearSelected + ".csv", function(data){
+    d3.csv("long_two_data/csv_sorted/" + yearSelected + ".csv", function(data){
 
         var bar = longtwo_rank.selectAll(".bar")
             .data(data)
