@@ -446,7 +446,7 @@ function updateShotChart(){
 function updateSeasonRank(){
     console.log("updating season rank");
     console.log("season" + yearSelected);
-    d3.csv("../outcomes/" + yearSelected + "_outcome.csv", function(data){
+    d3.csv("outcomes/" + yearSelected + "_outcome.csv", function(data){
         console.log(data);
         
 
@@ -487,7 +487,7 @@ function updateSeasonRank(){
     });
 
     // Transitions Long Two Rank List
-    d3.csv("../long_two_data/csv_sorted/" + yearSelected + ".csv", function(data){
+    d3.csv("long_two_data/csv_sorted/" + yearSelected + ".csv", function(data){
         var longRankElement = $(".long_two_g");
         var seasonRankElement = $(".season_rank_g");
 
